@@ -1,0 +1,8 @@
+﻿  main.cpp
+D:\Coding\C&C++\RayTracingInOneWeekend\RayTracingInOneWeekend\main.cpp(155,76): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  Generating code
+  1 of 484 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    4 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  RayTracingInOneWeekend.vcxproj -> D:\Coding\C&C++\RayTracingInOneWeekend\x64\Release\RayTracingInOneWeekend.exe
