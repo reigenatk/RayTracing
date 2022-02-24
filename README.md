@@ -11,7 +11,7 @@ Generate a nice scene using raytracing math. Here's an example:
 
 # Running
 
-Build the solution, run the solution and pipe to an .ppm file like this:
+Build the solution in Visual Studio 2019, run the exe by piping to an .ppm file like this:
 
 ```
 .\RayTracing.exe > image.ppm
