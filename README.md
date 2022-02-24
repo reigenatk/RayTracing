@@ -1,5 +1,4 @@
 # RayTracing
-Inspired by Ray Tracing In One Weekend
 
 A little side project I did inspired by this:
 
