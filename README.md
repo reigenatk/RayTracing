@@ -10,7 +10,7 @@ Generate a nice scene using raytracing math. Here's an example:
 
 # Running
 
-Build the solution in Visual Studio 2019, run the exe by piping to an .ppm file like this:
+Build the solution in Visual Studio 2019, and then run the exe by piping to an .ppm file like this:
 
 ```
 .\RayTracing.exe > image.ppm
@@ -20,7 +20,7 @@ Then open .ppm in a image processing program like Photoshop
 
 # Things I added to the base program:
 
-- Multithreading capability using std::thread
+- Multithreading capability using std::thread **Done!**
 
 # Todo:
 
