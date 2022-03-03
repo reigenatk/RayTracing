@@ -20,7 +20,7 @@ Then open .ppm in a image processing program like Photoshop
 
 # Things I added to the base program:
 
-- Multithreading capability using std::thread **Done!**
+- Multithreading capability using std::thread **(Done!)**
 
 # Todo:
 
