@@ -10,7 +10,7 @@ https://raytracing.github.io/books/RayTracingInOneWeekend.html
 
 ![image](https://user-images.githubusercontent.com/69275171/156908085-4ffbeebf-ffff-44de-84fe-42eab716bdc3.png)
 
-**Raytracing** is when you draw a scene by simulating light. You first make a scene with a bunch of objects, each of which has a certain **material**. The material specifies the color of the object as well as the type of interaction that light should have with it (is it a metal, a lambertian, a dielectric, etc.)
+**Raytracing** is when you draw a scene by simulating light. You first make a scene with a bunch of objects, each of which has a certain **material**. The material specifies the color of the object as well as the type of interaction that light should have with it (is it a metal, a lambertian, a dielectric, etc.) For example, that clear sphere in the middle is a metal, since the light reflects and you can see the other spheres on that big sphere.
 
 Next you place your position (called the camera) at a certain point, and then using a for loop, you emit light particles onto every coordinate point (x,y) on a big grid. Then using vector math, you let the light particles bounce a certain number of times, taking note of the color of the materials that it bumps into each time. Finally, taking all your collisions into account, you will assign that point on the grid a certain color value.
 
