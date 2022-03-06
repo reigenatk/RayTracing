@@ -40,11 +40,11 @@ I have 12 cores on my processor, and all of them are eaten up at max utilization
 
 # Things I added to the base program:
 
-- Multithreading capability using std::thread
-- Thread Pools to speed up multithreading even more (ThreadPool.h)
+- **Multithreading** capability using std::thread
+- **Thread Pools** to speed up multithreading even more (ThreadPool.h)
 - [Dear ImGUI](https://github.com/ocornut/imgui) integration for easy configuration and nice UI
 - Real-time statistics features (fps, pixels/sec)
-- Rendering an image in realtime using DirectX11 API (mostly handled by [this wonderful example](https://github.com/ocornut/imgui/wiki/Image-Loading-and-Displaying-Examples#about-imtextureid) by ImGUI, thankfully). The steps to do this involve storing a array in memory of the pixel values, then each frame, rendering that buffer into a DirectX11 texture (ID3D11ShaderResourceView), then finally using ImGui::Image() to call the [DirectX11 imgui backend](https://github.com/ocornut/imgui/blob/master/backends/imgui_impl_dx11.cpp)
+- Rendering an image in realtime using **DirectX11 3D API** (mostly handled by [this wonderful example](https://github.com/ocornut/imgui/wiki/Image-Loading-and-Displaying-Examples#about-imtextureid) by ImGUI, thankfully). The steps to do this involve storing a (char8_t) array in memory of the pixel values, then each frame, rendering that buffer into a DirectX11 texture (**ID3D11ShaderResourceView**), then finally using ImGui::Image() to call the [DirectX11 imgui backend](https://github.com/ocornut/imgui/blob/master/backends/imgui_impl_dx11.cpp). ImGUI is useful because it provides loads of backends for every popular graphics API, which lets you render things in your ImGUI window without having to know the specific functions of your particular backend.
 - A bit of Windows API stuff for window handle, window creation + message system. Again I mostly just read the example on how to do this.
 
 # Thanks 
@@ -52,3 +52,5 @@ I have 12 cores on my processor, and all of them are eaten up at max utilization
 To [Valerio Formato](https://github.com/valerioformato) + [The Cherno](https://www.youtube.com/channel/UCQ-W1KE9EYfdxhL6S4twUNw) for [this repo](https://github.com/valerioformato/RTIAW), and [this video](https://www.youtube.com/watch?v=mOSirVeP5lo), respectively. I drew a lot of inspiration (perhaps too much inspiration) from them. I learned a ton about multithreading, and modern C++ practices that I otherwise wouldn't have.
 
 And of course, to the author of Ray Tracing In a Weekend, [Peter Shirley](https://github.com/petershirley).
+
+On a completely unrelated sidenote, this project revealed to me how embarassingly little I know about C++. This was my first time trying to integrate a modern library like ImGUI into my project and its comical how many hours it took me to resolve simple linker errors and header file shennaningans. I need to practice using more real world code.
