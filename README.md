@@ -18,7 +18,13 @@ What you get is a 3D scene, which is rendered on a 2D plane of course. All gener
 
 # Running
 
-Build the solution in Visual Studio 2019, then configure the settings that you want (Anti Aliasing Depth + Child Ray Depth, number of threads to Use)
+Build the solution in Visual Studio 2019, then configure the settings that you want (Anti Aliasing Depth + Child Ray Depth, number of threads to Use). 
+
+Some things to note: 
+
+This project uses C++17, so make sure you change that in (Right Click) Properties->General->C++ Language Standard. 
+
+Also, this project uses d3d11.lib, aka DirectX11. So in order 
 
 Finally, just press "Start Render" which will start rendering the image.
 
@@ -36,6 +42,7 @@ If you don't want that, just turn the number of threads down.
 - Thread Pools to speed up multithreading even more (ThreadPool.h)
 - [Dear ImGUI](https://github.com/ocornut/imgui) integration for easy configuration and nice UI
 - Real-time statistics features (fps, pixels/sec)
+- Rendering an image in realtime using DirectX11 API (mostly handled by [this wonderful example](https://github.com/ocornut/imgui/wiki/Image-Loading-and-Displaying-Examples#about-imtextureid) by ImGUI, thankfully). The steps to do this involve storing a array in memory of the pixel values, then each frame, rendering that buffer into a DirectX11 texture (ID3D11ShaderResourceView), then finally using ImGui::Image() to call the [DirectX11 imgui backend](https://github.com/ocornut/imgui/blob/master/backends/imgui_impl_dx11.cpp)
 
 # Thanks 
 
