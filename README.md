@@ -24,7 +24,11 @@ Finally, just press "Start Render" which will start rendering the image.
 
 https://user-images.githubusercontent.com/69275171/156908469-10fdfcbd-effe-4d7b-bcab-7a2e4c6a549b.mp4
 
+Also note that this program will probably make your CPU heat up, since by default its set to max number of threads. 
 
+![image](https://user-images.githubusercontent.com/69275171/156908519-4398e2d4-d397-4567-8e5f-51d15f8d9b54.png)
+
+If you don't want that, just turn the number of threads down.
 
 # Things I added to the base program:
 
