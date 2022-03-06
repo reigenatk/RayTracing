@@ -18,15 +18,9 @@ What you get is a 3D scene, which is rendered on a 2D plane of course. All gener
 
 # Running
 
-Build the solution in Visual Studio 2019, then configure the settings that you want (Anti Aliasing Depth + Child Ray Depth, number of threads to Use). 
+Build the solution in Visual Studio 2019, then Run the solution. You will see a black screen and a UI. Configure the settings that you want (Anti Aliasing Depth + Child Ray Depth, number of threads to Use). 
 
-Some things to note: 
-
-This project uses C++17, so make sure you change that in (Right Click) Properties->General->C++ Language Standard. 
-
-Also, this project uses d3d11.lib, aka DirectX11. So in order 
-
-Finally, just press "Start Render" which will start rendering the image.
+Then just press "Start Render" which will start rendering the image.
 
 https://user-images.githubusercontent.com/69275171/156908469-10fdfcbd-effe-4d7b-bcab-7a2e4c6a549b.mp4
 
@@ -35,6 +29,14 @@ Also note that this program will probably make your CPU heat up, since by defaul
 ![image](https://user-images.githubusercontent.com/69275171/156908519-4398e2d4-d397-4567-8e5f-51d15f8d9b54.png)
 
 If you don't want that, just turn the number of threads down.
+
+# Some things to note:
+
+1. This project uses C++17, so make sure you change that in (Right Click) Properties->General->C++ Language Standard, and set that to C++17.
+
+2. This project uses d3d11.lib, aka DirectX11. I added a pragma comment so it would work, but in case it doesn't, this means you need to add that library. Go to Linker->Input->Additional Dependencies then just type "d3d11.lib" next to all the other libraries already present.
+
+3. As with most visual studio projects, Release mode runs substantially faster than Debug mode. So try to run it in Release.
 
 # Things I added to the base program:
 
