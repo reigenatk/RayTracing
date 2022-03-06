@@ -43,6 +43,7 @@ If you don't want that, just turn the number of threads down.
 - [Dear ImGUI](https://github.com/ocornut/imgui) integration for easy configuration and nice UI
 - Real-time statistics features (fps, pixels/sec)
 - Rendering an image in realtime using DirectX11 API (mostly handled by [this wonderful example](https://github.com/ocornut/imgui/wiki/Image-Loading-and-Displaying-Examples#about-imtextureid) by ImGUI, thankfully). The steps to do this involve storing a array in memory of the pixel values, then each frame, rendering that buffer into a DirectX11 texture (ID3D11ShaderResourceView), then finally using ImGui::Image() to call the [DirectX11 imgui backend](https://github.com/ocornut/imgui/blob/master/backends/imgui_impl_dx11.cpp)
+- A bit of Windows API stuff for window handle, window creation + message system. Again I mostly just read the example on how to do this.
 
 # Thanks 
 
