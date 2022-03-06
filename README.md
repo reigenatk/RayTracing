@@ -41,7 +41,7 @@ I have 12 logical processors, and all of them are eaten up at max utilization. I
 # Things I added to the base program:
 
 - **Multithreading** capability using std::thread
-- **Thread Pools** to speed up multithreading even more. The basic idea behind this is that when a thread finishes its work, it doesn't just exit. Instead, it returns to a centralized pool where it looks for more work. This sounds really easy at first, but is actually a nightmare to implemenet (think of all the synchronization issues that could arise!) Fortunately, I just used someone else's header file (ThreadPool.h) which was surprisingly only around 200 lines, but used many modern features like std::future, std::condition_variable, std::unique_lock + std::mutex.
+- **Thread Pools** to speed up multithreading even more. The basic idea behind this is that when a thread finishes its work, it doesn't just exit. Instead, it returns to a centralized pool where it looks for more work. This sounds really easy at first, but is actually a nightmare to implement (think of all the synchronization issues that could arise!) Fortunately, I just used someone else's header file (ThreadPool.h) which was surprisingly only around 200 lines, but used many modern features like std::future, std::condition_variable, std::unique_lock + std::mutex.
 - [Dear ImGUI](https://github.com/ocornut/imgui) integration for easy configuration and nice UI
 - Real-time statistics features (fps, pixels/sec)
 - Ability to change the camera position
