@@ -8,7 +8,7 @@ https://raytracing.github.io/books/RayTracingInOneWeekend.html
 
  Here's an example:
 
-![lol](https://user-images.githubusercontent.com/69275171/155463202-93d66f35-3458-45b7-aa9a-a05b76b96ba8.jpg)
+![image](https://user-images.githubusercontent.com/69275171/156908085-4ffbeebf-ffff-44de-84fe-42eab716bdc3.png)
 
 **Raytracing** is when you draw a scene by simulating light. You first make a scene with a bunch of objects, each of which has a certain **material**. The material specifies the color of the object as well as the type of interaction that light should have with it (is it a metal, a lambertian, a dielectric, etc.)
 
