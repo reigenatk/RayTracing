@@ -22,6 +22,8 @@ Build the solution in Visual Studio 2019, then configure the settings that you w
 
 Finally, just press "Start Render" which will start rendering the image.
 
+https://user-images.githubusercontent.com/69275171/156908469-10fdfcbd-effe-4d7b-bcab-7a2e4c6a549b.mp4
+
 
 
 # Things I added to the base program:
@@ -33,6 +35,6 @@ Finally, just press "Start Render" which will start rendering the image.
 
 # Thanks 
 
-To Valerio Formato + The Cherno for [this repo](https://github.com/valerioformato/RTIAW), and [this video](https://www.youtube.com/watch?v=mOSirVeP5lo), respectively. I drew a lot of inspiration (perhaps too much inspiration) from them. I learned a ton about multithreading, and modern C++ practices that I otherwise wouldn't have.
+To [Valerio Formato](https://github.com/valerioformato) + [The Cherno](https://www.youtube.com/channel/UCQ-W1KE9EYfdxhL6S4twUNw) for [this repo](https://github.com/valerioformato/RTIAW), and [this video](https://www.youtube.com/watch?v=mOSirVeP5lo), respectively. I drew a lot of inspiration (perhaps too much inspiration) from them. I learned a ton about multithreading, and modern C++ practices that I otherwise wouldn't have.
 
 And of course, to the author of Ray Tracing In a Weekend, [Peter Shirley](https://github.com/petershirley).
