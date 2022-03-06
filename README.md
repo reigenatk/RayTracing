@@ -32,9 +32,9 @@ I have 12 cores on my processor, and all of them are eaten up at max utilization
 
 # Some things to note:
 
-1. This project uses C++17, so make sure you change that in (Right Click) Properties->General->C++ Language Standard, and set that to C++17.
+1. This project uses **C++17**, so make sure you change that in (Right Click) Properties->General->C++ Language Standard, and set that to C++17.
 
-2. This project uses d3d11.lib, aka DirectX11. I added a pragma comment so it would work, but in case it doesn't, this means you need to add that library. Go to Linker->Input->Additional Dependencies then just type "d3d11.lib" next to all the other libraries already present.
+2. This project uses d3d11.lib, aka **DirectX11**. DirectX is installed on Windows, since it's a windows graphics library. I added a pragma comment so it would automatically import this library, but in case it doesn't, this means you need to add that library. Go to Linker->Input->Additional Dependencies then just type "d3d11.lib" next to all the other libraries already present.
 
 3. As with most visual studio projects, Release mode runs substantially faster than Debug mode. So try to run it in Release.
 
