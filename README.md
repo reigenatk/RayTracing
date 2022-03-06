@@ -28,7 +28,7 @@ Also note that this program will probably make your CPU heat up, since by defaul
 
 ![image](https://user-images.githubusercontent.com/69275171/156908519-4398e2d4-d397-4567-8e5f-51d15f8d9b54.png)
 
-I have 12 cores on my processor, and all of them are eaten up at max utilization. If you don't want that, just turn the number of threads down using the UI.
+I have 12 logical processors, and all of them are eaten up at max utilization. If you don't want that, just turn the number of threads down using the UI.
 
 # Some things to note:
 
