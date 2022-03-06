@@ -31,3 +31,8 @@ Finally, just press "Start Render" which will start rendering the image.
 - [Dear ImGUI](https://github.com/ocornut/imgui) integration for easy configuration and nice UI
 - Real-time statistics features (fps, pixels/sec)
 
+# Thanks 
+
+To Valerio Formato + The Cherno for [this repo](https://github.com/valerioformato/RTIAW), and [this video](https://www.youtube.com/watch?v=mOSirVeP5lo), respectively. I drew a lot of inspiration (perhaps too much inspiration) from them. I learned a ton about multithreading, and modern C++ practices that I otherwise wouldn't have.
+
+And of course, to the author of Ray Tracing In a Weekend, [Peter Shirley](https://github.com/petershirley).
