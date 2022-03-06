@@ -1,10 +1,10 @@
-# RayTracing
+# Generate a nice scene using raytracing math
 
 A little side project I did inspired by this:
 
 https://raytracing.github.io/books/RayTracingInOneWeekend.html
 
-Generate a nice scene using raytracing math. Here's an example:
+ Here's an example:
 
 ![lol](https://user-images.githubusercontent.com/69275171/155463202-93d66f35-3458-45b7-aa9a-a05b76b96ba8.jpg)
 
