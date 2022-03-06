@@ -200,7 +200,7 @@ color ray_color(const ray& r) {
 
 
 int main() {
-    App::AppWindow aw = App::AppWindow({ 700, 100 }, { 1000, 667 });
+    App::AppWindow aw = App::AppWindow({ 0,0 }, { 1000, 667 });
     aw.Run();
 
  //   auto start = high_resolution_clock::now();

@@ -63,9 +63,12 @@ namespace App {
 		// get size of window
 		// size_t = unsigned __int64
 		[[nodiscard]] size_t BufferSize() const {
-			return static_cast<size_t>(m_windowSize.x) * static_cast<size_t>(m_windowSize.y) * 4l;
+			return NumPixelsTotal() * 4l;  // 4 8-bit values per pixel (a number from 0-256), aka 4 bytes per pixel.
 		}
 
+		[[nodiscard]] size_t NumPixelsTotal() const {
+			return static_cast<size_t>(m_windowSize.x) * static_cast<size_t>(m_windowSize.y);
+		}
 	};
 }
 

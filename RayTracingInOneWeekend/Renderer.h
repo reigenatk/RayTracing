@@ -11,14 +11,20 @@
 #include "camera.h"
 #include "material.h"
 #include <chrono>
+#include <string>
+#include "ThreadPool.h"
 
 class Renderer
 {
 public:
 	Renderer();
+	~Renderer();
 
 	void StartRender();
 	void StartRenderThread();
+	void ToggleRender();
+	bool currentPauseState;
+	void setStoppedState();
 
 	color ray_color(ray& r, hittable_list& list, int depth);
 
@@ -32,7 +38,11 @@ public:
 
 	int getNumThreads();
 
+	// this thread is in charge of synchronizing all the threads that do the rendering
 	std::thread RenderThread;
+	Pool m_threadPool{};
+	int numThreadsToUse;
+	// std::vector<std::thread> running_threads;
 
 	
 	enum RenderState { NotStarted, Running, Stopped, Finished };
@@ -51,6 +61,13 @@ public:
 	hittable_list hl;
 
 	int numThreads = -1;
+
+	point3 currentCameraPosition;
+
+	// statistics
+	int getNumPixelsRendered();
+	int numPixelsRendered;
+	int numPixelsRenderedLast;
 
 	// Args: Camera(double vertical_fov, double aspect_ratio, vec3 vup, 
 // point3 lookfrom, point3 lookat)

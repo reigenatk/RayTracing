@@ -33,8 +33,8 @@ namespace App {
         // call CreateWindow API function, which returns a handle to the window
         // the stuff we're passing in here is like window size, position, window title, etc.
         m_hwnd = ::CreateWindow(wc.lpszClassName, _T("Raytracing in a weekend!"), WS_OVERLAPPEDWINDOW,
-            static_cast<UINT>(pos.x), static_cast<UINT>(pos.y), static_cast<UINT>(windowSize.x),
-            static_cast<UINT>(windowSize.y), nullptr, nullptr, wc.hInstance, this);
+            static_cast<UINT>(pos.x), static_cast<UINT>(pos.y), static_cast<UINT>(windowSize.x + 100),
+            static_cast<UINT>(windowSize.y + 100), nullptr, nullptr, wc.hInstance, this);
 
         CreateImageBuffer();
 
@@ -110,6 +110,21 @@ namespace App {
         return out_srv;
     }
 
+    // Helper to display a little (?) mark which shows a tooltip when hovered.
+    // In your own code you may want to display an actual icon if you are using a merged icon fonts (see docs/FONTS.md)
+    static void HelpMarker(const char* desc)
+    {
+        ImGui::TextDisabled("(?)");
+        if (ImGui::IsItemHovered())
+        {
+            ImGui::BeginTooltip();
+            ImGui::PushTextWrapPos(ImGui::GetFontSize() * 35.0f);
+            ImGui::TextUnformatted(desc);
+            ImGui::PopTextWrapPos();
+            ImGui::EndTooltip();
+        }
+    }
+
     void AppWindow::UpdateTexturizedImage(ID3D11ShaderResourceView* srv)  {
         ID3D11Resource* res;
         srv->GetResource(&res);
@@ -138,6 +153,8 @@ namespace App {
         // setup initial textures
         ID3D11ShaderResourceView* texturized_image = RenderToTexture();
         bool done = false;
+
+        int numFramesRendered = 0;
         while (!done) {
             MSG msg;
             while (::PeekMessage(&msg, nullptr, 0U, 0U, PM_REMOVE)) {
@@ -148,8 +165,17 @@ namespace App {
                     m_resized = false;
                 }
                 if (msg.message == WM_QUIT) {
+                    // if the renderthread is currently running, then we need to signal to it
+                    // that the program has terminated, which will in turn tell all of its child threads to stop
+                    // need this here otherwise we will exception in the case when we click X but renderthread doesn't exist yet
+                    if (m_renderer->getState() == Renderer::Running) {
+                        m_renderer->setStoppedState();
+                    }
                     done = true;
                 }
+                //if (msg.message = WM_CLOSE) {
+                //    m_renderer->setStoppedState();
+                //}
             }
             if (done)
                 break;
@@ -158,6 +184,7 @@ namespace App {
             ImGui_ImplDX11_NewFrame();
             ImGui_ImplWin32_NewFrame();
             ImGui::NewFrame();
+            
 
             // Here is where we actually output stuff to the window
 
@@ -170,44 +197,101 @@ namespace App {
             // info about window? 
             ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
             ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
-            ImGui::Begin("Ray Tracing...", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoResize);
+            ImGui::Begin("Ray Tracing... In a weekend!", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoBringToFrontOnFocus);
             ImGui::Image(static_cast<void*>(texturized_image), m_windowSize);
             ImGui::End();
             ImGui::PopStyleVar(2);
 
             // make another window that holds the controls
-            ImGui::SetNextWindowSize(ImVec2{ 300, 200 });
-            ImGui::Begin("Controls");
+            ImGui::SetNextWindowSize(ImVec2{ 500, 400 });
+            ImGui::Begin("Controls", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
             int numThreads = m_renderer->getNumThreads();
             if (numThreads != -1) {
-                ImGui::Text(("Number of Threads: " + std::to_string(numThreads)).c_str());
+                ImGui::Text("Number of Threads Rendering: %d / %d", numThreads, std::thread::hardware_concurrency());
             }
 
-            auto RendererState = m_renderer->getState();
+            ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+            
+            double pixelsRenderedPerSecond;
+            int framesPerUpdate = 15;
+            double percentage;
+            if (numFramesRendered % framesPerUpdate == 0) {
+                // update the value of pixel render rate every 5 frames. If I don't add this then it goes 
+                // really fast and you can't see the numbers very clearly.
+                int numPixelsRendered = m_renderer->getNumPixelsRendered();
+                pixelsRenderedPerSecond = 1.0f * numPixelsRendered / (ImGui::GetIO().DeltaTime * framesPerUpdate);
+                percentage = 100.0f * m_renderer->numPixelsRendered / (1.0f * (int) NumPixelsTotal());
+            }
+            ImGui::Text("%.0f Pixels rendered per second, %d / %d total, (%.2f%%)", pixelsRenderedPerSecond, 
+                m_renderer->numPixelsRendered, NumPixelsTotal(), percentage);
 
+
+            auto RendererState = m_renderer->getState();
+            if (ImGui::CollapsingHeader("Render Quality")) {
+                ImGui::SliderInt("Samples Per Pixel", &m_renderer->samples_per_pixel, 1, 100);
+                ImGui::SameLine(); 
+                HelpMarker("The number of samples we will take of nearby pixels' colors, in order to determine this pixel's color. Otherwise known as anti-aliasing");
+
+                ImGui::SliderInt("Child Ray Depth", &m_renderer->child_ray_depth, 1, 100);
+                ImGui::SameLine();
+                HelpMarker("The number of bounces a ray will travel before we stop taking into account the color of the surface it bounced off of. Same thing as recursion depth");
+            }
+
+            ImGui::SliderInt("Number of Threads to Use", &m_renderer->numThreadsToUse, 1, std::thread::hardware_concurrency() - 2);
+            
             // disable the Start button if the renderer is already running! We know start button has been pressed already
             // by just examining state of the renderer using getState()
             if (RendererState == Renderer::Running) {
-                ImGui::BeginDisabled();
+                ImGui::BeginDisabled(); // following elements should be disabled, when render is running
+            }
+
+           
+
+            if (ImGui::CollapsingHeader("Camera")) {
+                // no SliderDouble3 unfortunately, only SliderFloat3, so I had to settle with 3 inputs instead
+                ImGui::InputDouble("Camera X", &(m_renderer->currentCameraPosition.e[0]), 1.0f, 1.0f, "%.0f");
+                ImGui::InputDouble("Camera Y", &(m_renderer->currentCameraPosition.e[1]), 1.0f, 1.0f, "%.0f");
+                ImGui::InputDouble("Camera Z", &(m_renderer->currentCameraPosition.e[2]), 1.0f, 1.0f, "%.0f");
+
             }
             // simple start Button for renderer
-            if (ImGui::Button("Start Render", ImVec2(100,50))) {
+            if (ImGui::Button("Start Render")) {
                 // if we get here, button was clicked
+                // if the user meant to re-render everything then we should probably reset the imageBuffer to zeros
+
                 memset(m_imageBuffer.get(), 0, BufferSize());
                 m_renderer->StartRenderThread();
             }
             if (RendererState == Renderer::Running) {
                 ImGui::EndDisabled();
             }
+
+            if (ImGui::Button("Toggle Render")) {
+                // pause/resume the render
+                m_renderer->ToggleRender();
+            }
+            ImGui::SameLine();
+            
+            // if the renderer is running, display pause state, is it running or paused?
+            if (RendererState == Renderer::Running) {
+                if (m_renderer->currentPauseState == 1) {
+                    ImGui::Text("Current State: Paused");
+                }
+                else {
+                    ImGui::Text("Current State: Running");
+                }
+            }
+
             ImGui::End();
 
             // Rendering (standard stuff)
             ImGui::Render();
             m_pd3dDeviceContext->OMSetRenderTargets(1, &m_mainRenderTargetView, nullptr);
             ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
-
+            numFramesRendered++;
             m_pSwapChain->Present(1, 0); // Present with vsync
         }
+
     }
 
     AppWindow::~AppWindow() {
