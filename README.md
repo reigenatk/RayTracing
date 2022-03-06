@@ -2,6 +2,8 @@
 
 A little side project I did inspired by this:
 
+![stuff](https://images-na.ssl-images-amazon.com/images/I/414m4ETx0AL._SX342_SY445_QL70_ML2_.jpg)
+
 https://raytracing.github.io/books/RayTracingInOneWeekend.html
 
  Here's an example:
