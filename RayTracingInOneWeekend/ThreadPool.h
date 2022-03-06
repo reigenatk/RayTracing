@@ -57,18 +57,27 @@ public:
 
     void setThreads(const std::size_t thread_count) {
 
-        //if (m_threads.size() > 0) {
-        //    EmergencyStop();
-        //    // join any loose threads first
-        //    for (auto& task_thread : m_threads) {
-        //        bool joinable = task_thread.joinable();
-        //        if (joinable) {
-        //            task_thread.join();
-        //        }
-        //    }
-        //}
+        if (m_threads.size() > 0) {
 
-        //m_threads.resize(0);
+            // Set stop flag, so that threads currently blocked in Worker() will return
+            {
+                Unique_Lock_t queue_lock(m_queue_mutex);
+                m_should_stop_processing = true;
+            }
+
+            // Wake up all threads and wait for them to exit
+            m_pool_notifier.notify_all();
+
+            // join all threads
+            for (auto& task_thread : m_threads)
+                if (task_thread.joinable())
+                    task_thread.join();
+
+            // reset this flag to false
+            m_should_stop_processing = false;
+        }
+
+        m_threads.resize(0);
         // Sanity
         if (thread_count == 0)
             throw std::runtime_error("ERROR: Thread::Pool() -- must have at least one thread");

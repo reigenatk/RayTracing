@@ -236,8 +236,6 @@ namespace App {
                 ImGui::SameLine();
                 HelpMarker("The number of bounces a ray will travel before we stop taking into account the color of the surface it bounced off of. Same thing as recursion depth");
             }
-
-            ImGui::SliderInt("Number of Threads to Use", &m_renderer->numThreadsToUse, 1, std::thread::hardware_concurrency() - 2);
             
             // disable the Start button if the renderer is already running! We know start button has been pressed already
             // by just examining state of the renderer using getState()
@@ -245,7 +243,7 @@ namespace App {
                 ImGui::BeginDisabled(); // following elements should be disabled, when render is running
             }
 
-           
+            ImGui::SliderInt("Number of Threads to Use", &m_renderer->numThreadsToUse, 1, std::thread::hardware_concurrency() - 2);
 
             if (ImGui::CollapsingHeader("Camera")) {
                 // no SliderDouble3 unfortunately, only SliderFloat3, so I had to settle with 3 inputs instead
